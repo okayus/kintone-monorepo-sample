@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2015",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "checkJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "types": [
+      "@types/node",
+      "@kintone/dts-gen/kintone.d.ts"
+    ],
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist"
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["dist", "node_modules", "**/*.test.ts"]
+}

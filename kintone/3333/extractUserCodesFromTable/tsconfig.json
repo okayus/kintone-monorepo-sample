@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "checkJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "downlevelIteration": true,
+    "types": [
+      "@types/node",
+      "@kintone/dts-gen/kintone.d.ts",
+      "vitest/globals"
+    ],
+    "paths": {
+      "@kintone-monorepo-sample/kintone-common": ["../../kintone-common/src"],
+      "@kintone-monorepo-sample/kintone-common/*": ["../../kintone-common/src/*"]
+    }
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["dist", "node_modules"],
+  "sourceMap": true
+}

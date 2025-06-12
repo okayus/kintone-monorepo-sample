@@ -1,0 +1,25 @@
+{
+  "name": "kintone-monorepo-sample",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "kintone/kintone-common",
+    "kintone/3333/displayMessage",
+    "kintone/3333/extractUserCodesFromTable",
+    "kintone/2222/new-customization"
+  ],
+  "scripts": {
+    "dev:display": "npm run dev -w @kintone-monorepo-sample/display-message",
+    "dev:extract": "npm run dev -w @kintone-monorepo-sample/extract-user-codes",
+    "build:all": "npm run build --workspaces --if-present",
+    "test:all": "npm run test --workspaces --if-present",
+    "lint:all": "npm run lint --workspaces --if-present",
+    "typecheck:all": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@kintone/dts-gen": "^8.0.12",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  }
+}

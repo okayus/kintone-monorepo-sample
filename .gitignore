@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Kintone plugin files
+private.ppk
+jsdoc
+plugin/*.zip
+plugin/js
+
+# Environment variables
+.env
+
+# Build outputs
+dist/
+**/dist/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Cache and temporary files
+.cache/
+.parcel-cache/
+tmp/
+temp/
+.vitest/
+
+# TypeScript
+*.tsbuildinfo
+
+# Additional file types
+*.swp
+*.swo
