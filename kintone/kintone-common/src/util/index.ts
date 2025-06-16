@@ -1,2 +1,2 @@
-export { KintoneSdk, kintoneType } from './kintoneSdk';
-export { KintoneUtil } from './KintoneUtil';
+export { KintoneSdk } from './kintoneSdk';
+export type { kintoneType } from './kintoneSdk';

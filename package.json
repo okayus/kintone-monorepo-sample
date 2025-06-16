@@ -4,12 +4,17 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "kintone/kintone-common",
+    "kintone/2222/new-customization",
     "kintone/3333/displayMessage",
     "kintone/3333/extractUserCodesFromTable",
-    "kintone/2222/new-customization"
+    "kintone/8888/test-feature",
+    "kintone/9999/new-feature",
+    "kintone/kintone-common"
   ],
   "scripts": {
+    "create-customization": "node scripts/init-customization.js",
+    "build": "node scripts/build-customization.js",
+    "dev": "node scripts/dev-customization.js",
     "dev:display": "npm run dev -w @kintone-monorepo-sample/display-message",
     "dev:extract": "npm run dev -w @kintone-monorepo-sample/extract-user-codes",
     "build:all": "npm run build --workspaces --if-present",

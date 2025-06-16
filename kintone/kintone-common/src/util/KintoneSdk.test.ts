@@ -37,7 +37,7 @@ describe("kintoneSdk.getRecords", () => {
       .mockResolvedValueOnce({ records: mockRecords.slice(500, 1000) })
       .mockResolvedValueOnce({ records: [] });
 
-    const result = await kintoneApiService.getRecords(appId, fields, query);
+    const result = await kintoneApiService.getRecords({ app: appId, fields, query });
 
     expect(result.records).toHaveLength(1000);
     expect(mockClient.record.getRecords).toHaveBeenCalledTimes(3);
@@ -69,14 +69,14 @@ describe("kintoneSdk.getRecords", () => {
       records: Array(500).fill({}),
     });
 
-    const result = await kintoneApiService.getRecords(1);
+    const result = await kintoneApiService.getRecords({ app: 1 });
     expect(result.records.length).toBe(10000);
   });
 
   it("結果が空の場合に正しく処理できること", async () => {
     mockClient.record.getRecords.mockResolvedValueOnce({ records: [] });
 
-    const result = await kintoneApiService.getRecords(appId, fields, query);
+    const result = await kintoneApiService.getRecords({ app: appId, fields, query });
 
     expect(result.records).toHaveLength(0);
   });

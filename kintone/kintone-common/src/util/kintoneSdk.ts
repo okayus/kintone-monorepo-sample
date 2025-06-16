@@ -25,23 +25,27 @@ export class KintoneSdk {
     return apps;
   }
 
-  public async fetchFields(appId: AppID, preview: boolean = true) {
+  public async fetchFields({ app, preview = true }: { app: AppID; preview?: boolean }) {
     const fields = (
-      await this.restApiClient.app.getFormFields({ app: appId, preview })
+      await this.restApiClient.app.getFormFields({ app, preview })
     ).properties;
     return fields;
   }
 
-  public async getViews(appId: AppID) {
-    const views = await this.restApiClient.app.getViews({ app: appId });
+  public async getViews({ app }: { app: AppID }) {
+    const views = await this.restApiClient.app.getViews({ app });
     return views;
   }
 
-  public async getRecords(
-    appId: AppID,
-    fields: string[] = [],
-    query: string = "",
-  ) {
+  public async getRecords({
+    app,
+    fields = [],
+    query = "",
+  }: {
+    app: AppID;
+    fields?: string[];
+    query?: string;
+  }) {
     const MAX_READ_LIMIT = 500;
     const MAX_TOTAL_RECORDS = 10000;
 
@@ -53,7 +57,7 @@ export class KintoneSdk {
       const paginatedQuery = `${effectiveQuery}limit ${MAX_READ_LIMIT} offset ${offset}`;
 
       const response = await this.restApiClient.record.getRecords({
-        app: appId,
+        app,
         fields,
         query: paginatedQuery,
       });
@@ -68,21 +72,40 @@ export class KintoneSdk {
     return { records: allRecords };
   }
 
-  public async updateRecord(appId: AppID, recordId: number, record: Record) {
-    const res = await this.restApiClient.record.updateRecord({
-      app: appId,
-      id: recordId,
+  public async updateRecord({
+    app,
+    id,
+    record,
+    revision,
+  }: {
+    app: AppID;
+    id: number;
+    record: Record;
+    revision?: string;
+  }) {
+    const params: any = {
+      app,
+      id,
       record,
-    });
+    };
+    
+    if (revision !== undefined) {
+      params.revision = revision;
+    }
+    
+    const res = await this.restApiClient.record.updateRecord(params);
     return res;
   }
 
-  public async updateAllRecords(
-    appId: AppID,
-    records: Array<{ id: string; record: Record }>,
-  ) {
+  public async updateAllRecords({
+    app,
+    records,
+  }: {
+    app: AppID;
+    records: Array<{ id: string; record: Record; revision?: string }>;
+  }) {
     const res = await this.restApiClient.record.updateAllRecords({
-      app: appId,
+      app,
       records,
     });
     return res;
