@@ -1,221 +1,220 @@
-# kintone-monorepo-sample
+# kintone カスタマイズ モノレポ
 
-kintoneカスタマイズ開発のモノレポ管理サンプル
+このプロジェクトは、kintoneのカスタマイズJavaScriptファイルとGoogleスプレッドシート連携のGASファイルを単一リポジトリで管理するモノレポです。
 
-## 概要
-
-このリポジトリは、kintoneカスタマイズJavaScriptファイルをモノレポで効率的に管理するためのサンプルプロジェクトです。
-既存のJavaScriptファイルを維持しながら、新規開発をモダンな環境（TypeScript/JavaScript + Vite + Vitest）で行う段階的移行アプローチを提案しています。
-
-## 特徴
-
-### 🔄 段階的移行アプローチ
-- 既存JSファイルはそのまま維持
-- 新規カスタマイズはモジュール形式で開発
-- TypeScript、JavaScript両方に対応
-
-### 📦 モノレポ構成
-- npm workspacesによる統一管理
-- 共通ライブラリ（kintone-common）の再利用
-- アプリID別の整理された構造
-
-### 🛠️ モダンな開発環境
-- **Vite**: 高速ビルド・HMR対応
-- **Vitest**: 高速ユニットテスト
-- **TypeScript**: 型安全性（段階的導入可能）
-- **ESModules**: モジュール化による保守性向上
-
-### 🤝 既存コードとの共存
-- 既存JSファイルから共通モジュールを利用可能
-- UMD/ESM両形式での出力対応
-- 学習コストを抑えた段階的導入
-
-## ディレクトリ構造
+## プロジェクト構造
 
 ```
 kintone-monorepo-sample/
-├── package.json                 # ルートpackage.json（workspaces設定）
 ├── kintone/
-│   ├── kintone-common/         # 共通ライブラリ
-│   │   ├── src/
-│   │   │   ├── util/kintoneSdk.ts
-│   │   │   └── types/KintoneTypes.ts
-│   │   └── vite.config.ts
-│   ├── 1111/                   # アプリID: 1111
-│   │   └── postSlack.js        # 既存JSファイル
-│   ├── 2222/                   # アプリID: 2222
-│   │   ├── postSlack.js        # 既存JSファイル
-│   │   └── new-customization/  # 新規モジュール形式
-│   │       ├── src/index.js
-│   │       ├── test/
-│   │       └── vite.config.js
-│   └── 3333/                   # アプリID: 3333（TypeScript例）
-│       ├── release/postSlack.js # 既存JS（releaseディレクトリに移動）
-│       ├── displayMessage/     # TypeScriptプロジェクト
+│   ├── kintone-common/          # 共通ライブラリ
+│   ├── 2222/                    # アプリID: 2222
+│   │   └── new-customization/   # カスタマイズプロジェクト
+│   └── 3333/                    # アプリID: 3333
+│       ├── displayMessage/      # TypeScriptプロジェクト
 │       └── extractUserCodesFromTable/
-├── gas/                        # Google Apps Script
-└── docs/                       # ドキュメント
+├── gas/                         # Google Apps Script
+├── scripts/                     # ビルド・開発用スクリプト
+└── templates/                   # プロジェクトテンプレート
 ```
 
-## 使い方
-
-### 1. セットアップ
+## セットアップ
 
 ```bash
-# リポジトリのクローン
-git clone https://github.com/your-username/kintone-monorepo-sample.git
-cd kintone-monorepo-sample
-
 # 依存関係のインストール
 npm install
-
-# 共通ライブラリのビルド
-cd kintone/kintone-common
-npm run build
-cd ../..
 ```
 
-### 2. 新規カスタマイズの開発
+## 開発コマンド
+
+### 新規カスタマイズの作成
 
 ```bash
-# 新規プロジェクトの作成（アプリID: 4444の例）
-mkdir -p kintone/4444/my-customization
-cd kintone/4444/my-customization
+# 新規カスタマイズプロジェクトを作成
+npm run create-customization <app-id> <project-name>
 
-# package.jsonの作成（テンプレートを参考に）
-# vite.config.jsの作成
-# src/index.jsの作成
-
-# 開発開始
-npm run dev  # ウォッチモード
-npm run test # テスト実行
-npm run build # 本番ビルド
+# 例
+npm run create-customization 5555 user-management
 ```
 
-### 3. 既存JSからの共通モジュール利用
-
-```javascript
-// 既存のJSファイル内で
-const { KintoneSdk, KintoneUtil } = window.KintoneCommon;
-
-// kintone REST APIクライアントと組み合わせて使用
-const client = new KintoneRestAPIClient({/* 設定 */});
-const sdk = new KintoneSdk(client);
-```
-
-## 開発パターン
-
-### パターン1: JavaScript + モジュール（推奨）
-新規開発者の学習コストを抑えつつ、モジュール化の恩恵を受ける
-
-```javascript
-// src/index.js
-import { KintoneSdk, KintoneUtil } from '@kintone-sample/common';
-import { validateRecord } from './modules/validation.js';
-
-kintone.events.on('app.record.detail.show', (event) => {
-  // ロジック
-  return event;
-});
-```
-
-### パターン2: TypeScript（段階的移行）
-型安全性を重視する場合
-
-```typescript
-// src/index.tsx
-import { KintoneSdk, KintoneUtil } from '@kintone-sample/common';
-import type { KintoneEventObject } from '@kintone-sample/common';
-
-kintone.events.on('app.record.detail.show', (event: KintoneEventObject) => {
-  // 型安全なロジック
-  return event;
-});
-```
-
-## 利用可能なコマンド
+### 個別プロジェクトの操作
 
 ```bash
-# 全ワークスペースのビルド
+# 開発サーバー起動（ウォッチモード）
+npm run dev <app-id> <project-name>
+
+# ビルド
+npm run build <app-id> <project-name>
+
+# テスト実行（ウォッチモード）
+npm run test <app-id> <project-name>
+
+# テスト実行（一回実行）
+npm run test <app-id> <project-name> -- --run
+
+# ESLintチェック
+npm run lint <app-id> <project-name>
+
+# ESLint自動修正
+npm run lint <app-id> <project-name> -- --fix
+
+# Prettierフォーマット
+npm run format <app-id> <project-name>
+```
+
+### 使用例
+
+```bash
+# プロジェクト作成
+npm run create-customization 5555 user-management
+
+# 開発
+npm run dev 5555 user-management
+
+# テスト
+npm run test 5555 user-management
+
+# ビルド
+npm run build 5555 user-management
+
+# コード整形
+npm run format 5555 user-management
+```
+
+### 特定プロジェクトの直接操作（レガシー）
+
+```bash
+# displayMessageプロジェクトの開発
+npm run dev:display
+
+# extractUserCodesFromTableプロジェクトの開発
+npm run dev:extract
+```
+
+### 全プロジェクト一括操作
+
+```bash
+# 全プロジェクトのビルド
 npm run build:all
 
-# 全ワークスペースのテスト実行
+# 全プロジェクトのテスト
 npm run test:all
 
-# 特定ワークスペースでの作業
-npm run dev -w @kintone-sample/display-message
-npm run test -w @kintone-sample/app-2222-new-customization
+# 全プロジェクトのESLintチェック
+npm run lint:all
+
+# 全プロジェクトの型チェック
+npm run typecheck:all
 ```
 
-## 課題と解決策
+## 新規カスタマイズプロジェクトの機能
 
-### 従来の課題
-- ✗ プロジェクトルートから各アプリディレクトリに移動して作業
-- ✗ 共通ロジックの重複実装
-- ✗ テストの未実装
-- ✗ ビルドプロセスの複雑さ
+`create-customization`コマンドで作成されるプロジェクトには以下が含まれます：
 
-### 解決策
-- ✅ npm workspacesによる統一管理
-- ✅ kintone-commonによる共通化
-- ✅ Vitestによる単体テスト
-- ✅ Viteによる高速ビルド
+- **Vite**: 高速なビルドツール
+- **Vitest**: テストフレームワーク
+- **ESLint**: コード品質チェック
+- **Prettier**: コードフォーマッター
+- **@kintone-sample/common**: 共通ライブラリ
+- **依存性注入パターン**: テストしやすい設計
 
-## サンプルコード
+### 作成されるファイル構造
 
-### 共通ライブラリの利用例
+```
+kintone/<app-id>/<project-name>/
+├── src/
+│   ├── index.js                 # エントリーポイント
+│   └── modules/
+│       ├── sampleModule.js      # サンプルモジュール
+│       └── sampleModule.test.js # テストファイル
+├── dist/                        # ビルド出力
+├── package.json
+├── vite.config.js
+├── vitest.setup.js
+├── .eslintrc.cjs
+├── .eslintignore
+├── .prettierrc
+└── .gitignore
+```
+
+## kintone-common（共通ライブラリ）
+
+### 主な機能
+
+- **KintoneSdk**: kintone REST APIのラッパー
+  - `getRecords()`: レコード取得
+  - `updateRecord()`: レコード更新
+  - `getApps()`: アプリ一覧取得
+  - その他のAPI操作
+
+### 使用例
 
 ```javascript
-import { KintoneSdk, KintoneUtil, kintoneType } from '@kintone-sample/common';
+import { KintoneSdk } from '@kintone-sample/common';
+import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 
-// フィールド値の取得
-const title = KintoneUtil.getFieldValue(record, 'タイトル');
-
-// バリデーション
-const isValid = validateFieldByType(value, kintoneType.NUMBER, { min: 0, max: 100 });
-
-// REST API操作
+// 初期化
+const client = new KintoneRestAPIClient();
 const sdk = new KintoneSdk(client);
-const apps = await sdk.getApps();
+
+// レコード取得
+const records = await sdk.getRecords({ app: 123 });
 ```
 
-### ユニットテストの例
+## デプロイ
 
-```javascript
-import { describe, it, expect } from 'vitest';
-import { validateRecord } from '../src/modules/validation.js';
+1. プロジェクトをビルド
+   ```bash
+   npm run build <app-id> <project-name>
+   ```
 
-describe('validation', () => {
-  it('有効なレコードの場合はtrueを返す', () => {
-    const record = { 'タイトル': { value: 'テスト' } };
-    const result = validateRecord(record);
-    expect(result.isValid).toBe(true);
-  });
-});
+2. `dist/bundle.iife.js`をkintoneにアップロード
+
+### kintoneへのアップロード順序
+
+1. kintone-common.umd.js（共通ライブラリ）
+2. bundle.iife.js（カスタマイズコード）
+
+## トラブルシューティング
+
+### ESLintエラー
+
+ルートプロジェクトのESLint設定との競合がある場合は、Prettierでの整形を推奨：
+
+```bash
+npm run format <app-id> <project-name>
 ```
 
-## ドキュメント
+### ビルドエラー
 
-- [新規カスタマイズ開発ガイド](./新規カスタマイズ開発ガイド.md)
-- [トラブルシューティング](./トラブルシューティング.md)
-- [プロジェクト改善提案](./project-improvement-proposal.md)
+1. 依存関係の再インストール
+   ```bash
+   npm install
+   ```
+
+2. kintone-commonのリビルド
+   ```bash
+   cd kintone/kintone-common
+   npm run build
+   ```
+
+## 開発のベストプラクティス
+
+1. **新規開発は必ず`create-customization`を使用**
+   - 統一された構造とツールチェーン
+   - テスト環境の自動セットアップ
+
+2. **コミット前の確認**
+   ```bash
+   npm run test <app-id> <project-name> -- --run
+   npm run format <app-id> <project-name>
+   npm run build <app-id> <project-name>
+   ```
+
+3. **共通ロジックは`kintone-common`へ**
+   - 再利用可能なユーティリティ
+   - 型定義の共有
 
 ## ライセンス
 
 MIT License
-
-## 貢献
-
-Issue、Pull Requestを歓迎します。特に以下の改善案をお待ちしています：
-
-- 新しい開発パターンの提案
-- パフォーマンス改善
-- ドキュメントの充実
-- サンプルコードの追加
-
-## 関連リソース
-
-- [kintone JavaScript/CSS カスタマイズ](https://cybozu.dev/ja/kintone/docs/javascript/)
-- [kintone REST API](https://cybozu.dev/ja/kintone/docs/rest-api/)
-- [Vite](https://vitejs.dev/)
-- [Vitest](https://vitest.dev/)
