@@ -1,5 +1,5 @@
 {
-  "name": "@kintone-sample/app-{{APP_ID}}-{{PROJECT_NAME}}",
+  "name": "@kintone-sample/app-7777-lint-test",
   "version": "1.0.0",
   "type": "module",
   "scripts": {

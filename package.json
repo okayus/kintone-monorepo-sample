@@ -7,6 +7,7 @@
     "kintone/2222/new-customization",
     "kintone/3333/displayMessage",
     "kintone/3333/extractUserCodesFromTable",
+    "kintone/7777/lint-test",
     "kintone/8888/test-feature",
     "kintone/9999/new-feature",
     "kintone/kintone-common"
@@ -15,6 +16,9 @@
     "create-customization": "node scripts/init-customization.js",
     "build": "node scripts/build-customization.js",
     "dev": "node scripts/dev-customization.js",
+    "test": "node scripts/test-customization.js",
+    "lint": "node scripts/lint-customization.js",
+    "format": "node scripts/format-customization.js",
     "dev:display": "npm run dev -w @kintone-monorepo-sample/display-message",
     "dev:extract": "npm run dev -w @kintone-monorepo-sample/extract-user-codes",
     "build:all": "npm run build --workspaces --if-present",
