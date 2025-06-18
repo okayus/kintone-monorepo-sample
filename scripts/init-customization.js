@@ -223,6 +223,11 @@ process.chdir(projectRoot);
 console.log('Installing dependencies...');
 try {
   execSync('npm install', { stdio: 'inherit' });
+  
+  // Install dependencies for the new project
+  console.log(`Installing dependencies for ${appId}/${projectName}...`);
+  process.chdir(targetDir);
+  execSync('npm install', { stdio: 'inherit' });
 } catch (error) {
   console.error('Failed to install dependencies:', error.message);
   process.exit(1);
