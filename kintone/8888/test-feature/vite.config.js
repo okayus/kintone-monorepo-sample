@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
       name: 'KintoneApp8888TestFeature',
-      fileName: 'bundle',
+      fileName: 'test-feature',
       formats: ['iife']
     },
     rollupOptions: {

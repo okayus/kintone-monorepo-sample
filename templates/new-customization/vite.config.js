@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
       name: 'KintoneApp{{APP_ID}}{{PROJECT_NAME_CAMEL}}',
-      fileName: 'bundle',
+      fileName: '{{PROJECT_NAME}}',
       formats: ['iife']
     },
     rollupOptions: {

@@ -169,7 +169,8 @@ const records = await sdk.getRecords({ app: 123 });
    npm run build <app-id> <project-name>
    ```
 
-2. `dist/bundle.iife.js`をkintoneの「JavaScriptカスタマイズ」にアップロード
+2. `dist/[プロジェクト名].iife.js`をkintoneの「JavaScriptカスタマイズ」にアップロード
+   - 例：`new-feature`プロジェクトの場合は`dist/new-feature.iife.js`
 
 ## トラブルシューティング
 

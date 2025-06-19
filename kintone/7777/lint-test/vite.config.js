@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
       name: 'KintoneApp7777LintTest',
-      fileName: 'bundle',
+      fileName: 'lint-test',
       formats: ['iife']
     },
     rollupOptions: {
