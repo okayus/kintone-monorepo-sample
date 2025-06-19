@@ -13,12 +13,12 @@ export const kintoneApiMock = {
   },
 
   // API関連
-  api: vi.fn().mockImplementation((path, method, params) => {
+  api: vi.fn().mockImplementation(() => {
     return Promise.resolve({});
   }),
 
   // プロキシ関連
-  proxy: vi.fn().mockImplementation((url, method, headers, data) => {
+  proxy: vi.fn().mockImplementation(() => {
     return Promise.resolve([{}, 200]);
   }),
 

@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Common utilities and types for kintone projects",
-  "main": "dist/kintone-common.umd.cjs",
-  "module": "dist/kintone-common.js",
+  "main": "./dist/kintone-common.js",
+  "module": "./dist/kintone-common.js",
   "exports": {
     ".": {
       "import": "./dist/kintone-common.js",
-      "require": "./dist/kintone-common.umd.cjs"
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
     "test": "vitest",
     "test:watch": "vitest watch",
     "typecheck": "tsc --noEmit"

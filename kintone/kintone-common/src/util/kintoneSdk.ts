@@ -1,4 +1,4 @@
-import {
+import type {
   KintoneFormFieldProperty,
   KintoneRestAPIClient,
 } from "@kintone/rest-api-client";

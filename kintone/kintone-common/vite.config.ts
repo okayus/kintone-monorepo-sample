@@ -7,15 +7,10 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'KintoneCommon',
       fileName: 'kintone-common',
-      formats: ['es', 'umd']
+      formats: ['es']
     },
     rollupOptions: {
-      external: ['@kintone/rest-api-client'],
-      output: {
-        globals: {
-          '@kintone/rest-api-client': 'KintoneRestAPIClient'
-        }
-      }
+      external: ['@kintone/rest-api-client']
     },
     outDir: 'dist',
     emptyOutDir: true
