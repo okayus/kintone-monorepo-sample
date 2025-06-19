@@ -146,6 +146,7 @@ kintone/<app-id>/<project-name>/
   - `updateRecord()`: レコード更新
   - `getApps()`: アプリ一覧取得
   - その他のAPI操作
+- **テストユーティリティ**: kintoneグローバルオブジェクトのモック機能
 
 ### 使用例
 
@@ -153,7 +154,7 @@ kintone/<app-id>/<project-name>/
 import { KintoneSdk } from '@kintone-sample/common';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 
-// 初期化
+// 初期化（ブラウザでログイン済みのセッション認証を使用）
 const client = new KintoneRestAPIClient();
 const sdk = new KintoneSdk(client);
 
@@ -168,12 +169,7 @@ const records = await sdk.getRecords({ app: 123 });
    npm run build <app-id> <project-name>
    ```
 
-2. `dist/bundle.iife.js`をkintoneにアップロード
-
-### kintoneへのアップロード順序
-
-1. kintone-common.umd.js（共通ライブラリ）
-2. bundle.iife.js（カスタマイズコード）
+2. `dist/bundle.iife.js`をkintoneの「JavaScriptカスタマイズ」にアップロード
 
 ## トラブルシューティング
 
@@ -195,8 +191,18 @@ npm run format <app-id> <project-name>
 2. kintone-commonのリビルド
    ```bash
    cd kintone/kintone-common
+   npm install
    npm run build
    ```
+
+### node_modulesが見つからないエラー
+
+個別プロジェクトで`vitest: command not found`などのエラーが出る場合：
+
+```bash
+cd kintone/<app-id>/<project-name>
+npm install
+```
 
 ## 開発のベストプラクティス
 
